@@ -1,0 +1,103 @@
+<h2>Billing</h2>
+
+<!-- Add Billing Form -->
+<section class="form-section">
+  <h3>Add New Billing</h3>
+  <form (ngSubmit)="addBilling()" #billingForm="ngForm">
+    <div class="form-group">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" [(ngModel)]="newBilling.patient_id" name="patient_id" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="appointment_id">Appointment</label>
+      <select id="appointment_id" [(ngModel)]="newBilling.appointment_id" name="appointment_id" required>
+        <option value="" disabled selected>Select Appointment</option>
+        <option *ngFor="let appointment of appointments" [value]="appointment._id">
+          {{ appointment.appointment_date | date }} - {{ appointment.appointment_time }} ({{ appointment.doctor_name }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="total_amount">Total Amount</label>
+      <input id="total_amount" [(ngModel)]="newBilling.total_amount" name="total_amount" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="billing_date">Billing Date</label>
+      <input id="billing_date" [(ngModel)]="newBilling.billing_date" name="billing_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="payment_status">Payment Status</label>
+      <select id="payment_status" [(ngModel)]="newBilling.payment_status" name="payment_status" required>
+        <option value="Paid">Paid</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-primary">Add Billing</button>
+  </form>
+</section>
+
+<!-- Billing List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Appointment</th>
+      <th>Total Amount</th>
+      <th>Billing Date</th>
+      <th>Payment Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let billing of billings">
+      <ng-container *ngIf="editBilling !== billing._id; else editRow">
+        <td>{{ getPatientName(billing.patient_id) }}</td>
+        <td>{{ getAppointmentDetails(billing.appointment_id) }}</td>
+        <td>{{ billing.total_amount }}</td>
+        <td>{{ billing.billing_date | date }}</td>
+        <td>{{ billing.payment_status }}</td>
+        <td>
+          <button (click)="startEdit(billing)">Edit</button>
+          <button (click)="deleteBilling(billing._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td>
+          <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+            <option value="" disabled>Select Patient</option>
+            <option *ngFor="let patient of patients" [value]="patient._id">
+              {{ patient.first_name }} {{ patient.last_name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.appointment_id" name="edit_appointment_id" required>
+            <option value="" disabled>Select Appointment</option>
+            <option *ngFor="let appointment of appointments" [value]="appointment._id">
+              {{ appointment.appointment_date | date }} - {{ appointment.appointment_time }} ({{ appointment.doctor_name }})
+            </option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.total_amount" name="edit_total_amount" type="number" required /></td>
+        <td><input [(ngModel)]="editData.billing_date" name="edit_billing_date" type="date" required /></td>
+        <td>
+          <select [(ngModel)]="editData.payment_status" name="edit_payment_status" required>
+            <option value="Paid">Paid</option>
+            <option value="Pending">Pending</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
+        </td>
+        <td>
+          <button (click)="saveEdit(billing._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

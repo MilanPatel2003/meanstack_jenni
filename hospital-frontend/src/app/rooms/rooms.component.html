@@ -1,0 +1,91 @@
+<h2>Rooms</h2>
+
+<!-- Add Room Form -->
+<section class="form-section">
+  <h3>Add New Room</h3>
+  <form (ngSubmit)="addRoom()" #roomForm="ngForm">
+    <div class="form-group">
+      <label for="room_number">Room Number</label>
+      <input id="room_number" [(ngModel)]="newRoom.room_number" name="room_number" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="room_type">Room Type</label>
+      <select id="room_type" [(ngModel)]="newRoom.room_type" name="room_type" required>
+        <option value="" disabled selected>Select Type</option>
+        <option value="General">General</option>
+        <option value="Private">Private</option>
+        <option value="ICU">ICU</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="bed_capacity">Bed Capacity</label>
+      <input id="bed_capacity" [(ngModel)]="newRoom.bed_capacity" name="bed_capacity" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="availability_status">Availability Status</label>
+      <select id="availability_status" [(ngModel)]="newRoom.availability_status" name="availability_status">
+        <option value="Available" selected>Available</option>
+        <option value="Occupied">Occupied</option>
+        <option value="Maintenance">Maintenance</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="daily_rate">Daily Rate</label>
+      <input id="daily_rate" [(ngModel)]="newRoom.daily_rate" name="daily_rate" type="number" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Room</button>
+  </form>
+</section>
+
+<!-- Rooms List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Room Number</th>
+      <th>Type</th>
+      <th>Bed Capacity</th>
+      <th>Availability Status</th>
+      <th>Daily Rate</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let room of rooms">
+      <ng-container *ngIf="editRoom !== room._id; else editRow">
+        <td>{{ room.room_number }}</td>
+        <td>{{ room.room_type }}</td>
+        <td>{{ room.bed_capacity }}</td>
+        <td>{{ room.availability_status }}</td>
+        <td>{{ room.daily_rate }}</td>
+        <td>
+          <button (click)="startEdit(room)">Edit</button>
+          <button (click)="deleteRoom(room._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.room_number" name="edit_room_number" type="number" required /></td>
+        <td>
+          <select [(ngModel)]="editData.room_type" name="edit_room_type" required>
+            <option value="" disabled>Select Type</option>
+            <option value="General">General</option>
+            <option value="Private">Private</option>
+            <option value="ICU">ICU</option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.bed_capacity" name="edit_bed_capacity" type="number" required /></td>
+        <td>
+          <select [(ngModel)]="editData.availability_status" name="edit_availability_status">
+            <option value="Available" selected>Available</option>
+            <option value="Occupied">Occupied</option>
+            <option value="Maintenance">Maintenance</option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.daily_rate" name="edit_daily_rate" type="number" required /></td>
+        <td>
+          <button (click)="saveEdit(room._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

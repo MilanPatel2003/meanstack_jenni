@@ -1,0 +1,90 @@
+<h2>Patients</h2>
+
+<!-- Add Patient Form -->
+<section class="form-section">
+  <h3>Add New Patient</h3>
+  <form #form="ngForm" (ngSubmit)="addPatient()" class="patient-form">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input id="first_name" [(ngModel)]="newPatient.first_name" name="first_name" required />
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input id="last_name" [(ngModel)]="newPatient.last_name" name="last_name" required />
+    </div>
+    <div class="form-group">
+      <label for="date_of_birth">Date of Birth</label>
+      <input id="date_of_birth" [(ngModel)]="newPatient.date_of_birth" name="date_of_birth" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="gender">Gender</label>
+      <input id="gender" [(ngModel)]="newPatient.gender" name="gender" required />
+    </div>
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input id="address" [(ngModel)]="newPatient.address" name="address" required />
+    </div>
+    <div class="form-group">
+      <label for="phone_number">Phone</label>
+      <input id="phone_number" [(ngModel)]="newPatient.phone_number" name="phone_number" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" [(ngModel)]="newPatient.email" name="email" required />
+    </div>
+    <div class="form-group">
+      <label for="insurance_details">Insurance Details</label>
+      <input id="insurance_details" [(ngModel)]="newPatient.insurance_details" name="insurance_details" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Patient</button>
+  </form>
+</section>
+
+<!-- Patients List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>DOB</th>
+      <th>Gender</th>
+      <th>Address</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Insurance</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let patient of patients">
+      <ng-container *ngIf="editPatient !== patient._id; else editRow">
+        <td>{{ patient.first_name }}</td>
+        <td>{{ patient.last_name }}</td>
+        <td>{{ patient.date_of_birth | date }}</td>
+        <td>{{ patient.gender }}</td>
+        <td>{{ patient.address }}</td>
+        <td>{{ patient.phone_number }}</td>
+        <td>{{ patient.email }}</td>
+        <td>{{ patient.insurance_details }}</td>
+        <td>
+          <button (click)="startEdit(patient)">Edit</button>
+          <button (click)="deletePatient(patient._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.first_name" name="edit_first_name{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.last_name" name="edit_last_name{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.date_of_birth" name="edit_dob{{patient._id}}" type="date" /></td>
+        <td><input [(ngModel)]="editData.gender" name="edit_gender{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.address" name="edit_address{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.phone_number" name="edit_phone{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.email" name="edit_email{{patient._id}}" /></td>
+        <td><input [(ngModel)]="editData.insurance_details" name="edit_insurance{{patient._id}}" /></td>
+        <td>
+          <button (click)="saveEdit(patient._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

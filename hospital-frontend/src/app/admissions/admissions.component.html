@@ -1,0 +1,119 @@
+<h2>Admissions</h2>
+
+<!-- Add Admission Form -->
+<section class="form-section">
+  <h3>Add New Admission</h3>
+  <form (ngSubmit)="addAdmission()" #admissionForm="ngForm">
+    <div class="form-group">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" [(ngModel)]="newAdmission.patient_id" name="patient_id" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="room_id">Room</label>
+      <select id="room_id" [(ngModel)]="newAdmission.room_id" name="room_id" required>
+        <option value="" disabled selected>Select Room</option>
+        <option *ngFor="let room of rooms" [value]="room._id">
+          {{ room.room_number }} ({{ room.room_type }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="staff_id">Staff</label>
+      <select id="staff_id" [(ngModel)]="newAdmission.staff_id" name="staff_id" required>
+        <option value="" disabled selected>Select Staff</option>
+        <option *ngFor="let staffMember of staff" [value]="staffMember._id">
+          {{ staffMember.first_name }} {{ staffMember.last_name }} ({{ staffMember.role }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="admission_date">Admission Date</label>
+      <input id="admission_date" [(ngModel)]="newAdmission.admission_date" name="admission_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="discharge_date">Discharge Date</label>
+      <input id="discharge_date" [(ngModel)]="newAdmission.discharge_date" name="discharge_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="admission_reason">Admission Reason</label>
+      <textarea id="admission_reason" [(ngModel)]="newAdmission.admission_reason" name="admission_reason" rows="2" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="discharge_summary">Discharge Summary</label>
+      <textarea id="discharge_summary" [(ngModel)]="newAdmission.discharge_summary" name="discharge_summary" rows="2" required></textarea>
+    </div>
+    <button type="submit" class="btn-primary">Add Admission</button>
+  </form>
+</section>
+
+<!-- Admissions List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Room</th>
+      <th>Staff</th>
+      <th>Admission Date</th>
+      <th>Discharge Date</th>
+      <th>Admission Reason</th>
+      <th>Discharge Summary</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let admission of admissions">
+      <ng-container *ngIf="editAdmission !== admission._id; else editRow">
+        <td>{{ getPatientName(admission.patient_id) }}</td>
+        <td>{{ getRoomDetails(admission.room_id) }}</td>
+        <td>{{ getStaffName(admission.staff_id) }}</td>
+        <td>{{ admission.admission_date | date }}</td>
+        <td>{{ admission.discharge_date | date }}</td>
+        <td>{{ admission.admission_reason }}</td>
+        <td>{{ admission.discharge_summary }}</td>
+        <td>
+          <button (click)="startEdit(admission)">Edit</button>
+          <button (click)="deleteAdmission(admission._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td>
+          <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+            <option value="" disabled>Select Patient</option>
+            <option *ngFor="let patient of patients" [value]="patient._id">
+              {{ patient.first_name }} {{ patient.last_name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.room_id" name="edit_room_id" required>
+            <option value="" disabled>Select Room</option>
+            <option *ngFor="let room of rooms" [value]="room._id">
+              {{ room.room_number }} ({{ room.room_type }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.staff_id" name="edit_staff_id" required>
+            <option value="" disabled>Select Staff</option>
+            <option *ngFor="let staffMember of staff" [value]="staffMember._id">
+              {{ staffMember.first_name }} {{ staffMember.last_name }} ({{ staffMember.role }})
+            </option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.admission_date" name="edit_admission_date" type="date" required /></td>
+        <td><input [(ngModel)]="editData.discharge_date" name="edit_discharge_date" type="date" required /></td>
+        <td><textarea [(ngModel)]="editData.admission_reason" name="edit_admission_reason" rows="2" required></textarea></td>
+        <td><textarea [(ngModel)]="editData.discharge_summary" name="edit_discharge_summary" rows="2" required></textarea></td>
+        <td>
+          <button (click)="saveEdit(admission._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

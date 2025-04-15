@@ -1,0 +1,32 @@
+<div class="dashboard-container">
+  <h2>Hospital Dashboard</h2>
+  <div *ngIf="errorMsg" class="dashboard-error">{{ errorMsg }}</div>
+  <div *ngIf="!errorMsg">
+    <div class="dashboard-cards">
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Patients</div>
+        <div class="dashboard-card-value">{{ totalPatients }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Doctors</div>
+        <div class="dashboard-card-value">{{ totalDoctors }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Appointments</div>
+        <div class="dashboard-card-value">{{ totalAppointments }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Admissions</div>
+        <div class="dashboard-card-value">{{ totalAdmissions }}</div>
+      </div>
+      <div class="dashboard-card">
+        <div class="dashboard-card-title">Billings</div>
+        <div class="dashboard-card-value">{{ totalBillings }}</div>
+      </div>
+    </div>
+    <div class="dashboard-note">
+      <em>Live stats powered by the dashboard API.</em>
+    </div>
+  </div>
+</div>
+

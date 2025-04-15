@@ -1,0 +1,100 @@
+<h2>Medical Records</h2>
+
+<!-- Add Medical Record Form -->
+<section class="form-section">
+  <h3>Add New Medical Record</h3>
+  <form (ngSubmit)="addRecord()" #recordForm="ngForm">
+    <div class="form-group">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" [(ngModel)]="newRecord.patient_id" name="patient_id" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="doctor_id">Doctor</label>
+      <select id="doctor_id" [(ngModel)]="newRecord.doctor_id" name="doctor_id" required>
+        <option value="" disabled selected>Select Doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor._id">
+          {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="visit_date">Visit Date</label>
+      <input id="visit_date" [(ngModel)]="newRecord.visit_date" name="visit_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="diagnosis">Diagnosis</label>
+      <textarea id="diagnosis" [(ngModel)]="newRecord.diagnosis" name="diagnosis" rows="2" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="treatment">Treatment</label>
+      <textarea id="treatment" [(ngModel)]="newRecord.treatment" name="treatment" rows="2" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="prescription">Prescription</label>
+      <textarea id="prescription" [(ngModel)]="newRecord.prescription" name="prescription" rows="2" required></textarea>
+    </div>
+    <button type="submit" class="btn-primary">Add Record</button>
+  </form>
+</section>
+
+<!-- Medical Records List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient</th>
+      <th>Doctor</th>
+      <th>Visit Date</th>
+      <th>Diagnosis</th>
+      <th>Treatment</th>
+      <th>Prescription</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let record of records">
+      <ng-container *ngIf="editRecord !== record._id; else editRow">
+        <td>{{ getPatientName(record.patient_id) }}</td>
+        <td>{{ getDoctorName(record.doctor_id) }}</td>
+        <td>{{ record.visit_date | date }}</td>
+        <td>{{ record.diagnosis }}</td>
+        <td>{{ record.treatment }}</td>
+        <td>{{ record.prescription }}</td>
+        <td>
+          <button (click)="startEdit(record)">Edit</button>
+          <button (click)="deleteRecord(record._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td>
+          <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+            <option value="" disabled>Select Patient</option>
+            <option *ngFor="let patient of patients" [value]="patient._id">
+              {{ patient.first_name }} {{ patient.last_name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.doctor_id" name="edit_doctor_id" required>
+            <option value="" disabled>Select Doctor</option>
+            <option *ngFor="let doctor of doctors" [value]="doctor._id">
+              {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+            </option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.visit_date" name="edit_visit_date" type="date" required /></td>
+        <td><textarea [(ngModel)]="editData.diagnosis" name="edit_diagnosis" rows="2" required></textarea></td>
+        <td><textarea [(ngModel)]="editData.treatment" name="edit_treatment" rows="2" required></textarea></td>
+        <td><textarea [(ngModel)]="editData.prescription" name="edit_prescription" rows="2" required></textarea></td>
+        <td>
+          <button (click)="saveEdit(record._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

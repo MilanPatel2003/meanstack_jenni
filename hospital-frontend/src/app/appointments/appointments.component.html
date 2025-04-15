@@ -1,0 +1,114 @@
+<h2>Appointments</h2>
+
+<!-- Add Appointment Form -->
+<section class="form-section">
+  <h3>Add New Appointment</h3>
+  <form (ngSubmit)="addAppointment()" #appointmentForm="ngForm">
+    <div class="form-group">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" [(ngModel)]="newAppointment.patient_id" name="patient_id" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="doctor_id">Doctor</label>
+      <select id="doctor_id" [(ngModel)]="newAppointment.doctor_id" name="doctor_id" required>
+        <option value="" disabled selected>Select Doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor._id">
+          {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="appointment_date">Date</label>
+      <input id="appointment_date" [(ngModel)]="newAppointment.appointment_date" name="appointment_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="appointment_time">Time</label>
+      <input id="appointment_time" [(ngModel)]="newAppointment.appointment_time" name="appointment_time" type="time" required />
+    </div>
+    <div class="form-group">
+      <label for="appointment_status">Status</label>
+      <select id="appointment_status" [(ngModel)]="newAppointment.appointment_status" name="appointment_status" required>
+        <option value="" disabled selected>Select Status</option>
+        <option value="Scheduled">Scheduled</option>
+        <option value="Completed">Completed</option>
+        <option value="Cancelled">Cancelled</option>
+        <option value="No Show">No Show</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="reason_for_visit">Reason for Visit</label>
+      <textarea id="reason_for_visit" [(ngModel)]="newAppointment.reason_for_visit" name="reason_for_visit" rows="2" required></textarea>
+    </div>
+    <button type="submit" class="btn-primary">Add Appointment</button>
+  </form>
+</section>
+
+<!-- Appointments List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient ID</th>
+      <th>Doctor ID</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+      <th>Reason</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let appointment of appointments">
+      <ng-container *ngIf="editAppointment !== appointment._id; else editRow">
+        <td>{{ getPatientName(appointment.patient_id) }}</td>
+        <td>{{ getDoctorName(appointment.doctor_id) }}</td>
+        <td>{{ appointment.appointment_date | date }}</td>
+        <td>{{ appointment.appointment_time }}</td>
+        <td>{{ appointment.appointment_status }}</td>
+        <td>{{ appointment.reason_for_visit }}</td>
+        <td>
+          <button (click)="startEdit(appointment)">Edit</button>
+          <button (click)="deleteAppointment(appointment._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td>
+          <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+            <option value="" disabled>Select Patient</option>
+            <option *ngFor="let patient of patients" [value]="patient._id">
+              {{ patient.first_name }} {{ patient.last_name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.doctor_id" name="edit_doctor_id" required>
+            <option value="" disabled>Select Doctor</option>
+            <option *ngFor="let doctor of doctors" [value]="doctor._id">
+              {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+            </option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.appointment_date" name="edit_appointment_date" type="date" required /></td>
+        <td><input [(ngModel)]="editData.appointment_time" name="edit_appointment_time" type="time" required /></td>
+        <td>
+          <select [(ngModel)]="editData.appointment_status" name="edit_appointment_status" required>
+            <option value="" disabled>Select Status</option>
+            <option value="Scheduled">Scheduled</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="No Show">No Show</option>
+          </select>
+        </td>
+        <td><textarea [(ngModel)]="editData.reason_for_visit" name="edit_reason_for_visit" rows="2" required></textarea></td>
+        <td>
+          <button (click)="saveEdit(appointment._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

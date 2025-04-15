@@ -1,0 +1,83 @@
+<h2>Doctors</h2>
+
+<!-- Add Doctor Form -->
+<section class="form-section">
+  <h3>Add New Doctor</h3>
+  <form (ngSubmit)="addDoctor()" #doctorForm="ngForm">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input id="first_name" [(ngModel)]="newDoctor.first_name" name="first_name" required />
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input id="last_name" [(ngModel)]="newDoctor.last_name" name="last_name" required />
+    </div>
+    <div class="form-group">
+      <label for="specialization">Specialization</label>
+      <input id="specialization" [(ngModel)]="newDoctor.specialization" name="specialization" required />
+    </div>
+    <div class="form-group">
+      <label for="phone_number">Phone Number</label>
+      <input id="phone_number" [(ngModel)]="newDoctor.phone_number" name="phone_number" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" [(ngModel)]="newDoctor.email" name="email" type="email" required />
+    </div>
+    <div class="form-group">
+      <label for="hire_date">Hire Date</label>
+      <input id="hire_date" [(ngModel)]="newDoctor.hire_date" name="hire_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="consultation_fee">Consultation Fee</label>
+      <input id="consultation_fee" [(ngModel)]="newDoctor.consultation_fee" name="consultation_fee" type="number" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Doctor</button>
+  </form>
+</section>
+
+<!-- Doctors List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Specialization</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Hire Date</th>
+      <th>Consultation Fee</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let doctor of doctors">
+      <ng-container *ngIf="editDoctor !== doctor._id; else editRow">
+        <td>{{ doctor.first_name }}</td>
+        <td>{{ doctor.last_name }}</td>
+        <td>{{ doctor.specialization }}</td>
+        <td>{{ doctor.phone_number }}</td>
+        <td>{{ doctor.email }}</td>
+        <td>{{ doctor.hire_date | date }}</td>
+        <td>{{ doctor.consultation_fee }}</td>
+        <td>
+          <button (click)="startEdit(doctor)">Edit</button>
+          <button (click)="deleteDoctor(doctor._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.first_name" name="edit_first_name" required /></td>
+        <td><input [(ngModel)]="editData.last_name" name="edit_last_name" required /></td>
+        <td><input [(ngModel)]="editData.specialization" name="edit_specialization" required /></td>
+        <td><input [(ngModel)]="editData.phone_number" name="edit_phone_number" required /></td>
+        <td><input [(ngModel)]="editData.email" name="edit_email" type="email" required /></td>
+        <td><input [(ngModel)]="editData.hire_date" name="edit_hire_date" type="date" required /></td>
+        <td><input [(ngModel)]="editData.consultation_fee" name="edit_consultation_fee" type="number" required /></td>
+        <td>
+          <button (click)="saveEdit(doctor._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

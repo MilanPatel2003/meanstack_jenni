@@ -1,0 +1,83 @@
+<h2>Staff</h2>
+
+<!-- Add Staff Form -->
+<section class="form-section">
+  <h3>Add New Staff</h3>
+  <form (ngSubmit)="addStaff()" #staffForm="ngForm">
+    <div class="form-group">
+      <label for="first_name">First Name</label>
+      <input id="first_name" [(ngModel)]="newStaff.first_name" name="first_name" required />
+    </div>
+    <div class="form-group">
+      <label for="last_name">Last Name</label>
+      <input id="last_name" [(ngModel)]="newStaff.last_name" name="last_name" required />
+    </div>
+    <div class="form-group">
+      <label for="role">Role</label>
+      <input id="role" [(ngModel)]="newStaff.role" name="role" required />
+    </div>
+    <div class="form-group">
+      <label for="phone_number">Phone Number</label>
+      <input id="phone_number" [(ngModel)]="newStaff.phone_number" name="phone_number" required />
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input id="email" [(ngModel)]="newStaff.email" name="email" type="email" required />
+    </div>
+    <div class="form-group">
+      <label for="hire_date">Hire Date</label>
+      <input id="hire_date" [(ngModel)]="newStaff.hire_date" name="hire_date" type="date" required />
+    </div>
+    <div class="form-group">
+      <label for="salary">Salary</label>
+      <input id="salary" [(ngModel)]="newStaff.salary" name="salary" type="number" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Staff</button>
+  </form>
+</section>
+
+<!-- Staff List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Role</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Hire Date</th>
+      <th>Salary</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let staffMember of staff">
+      <ng-container *ngIf="editStaff !== staffMember._id; else editRow">
+        <td>{{ staffMember.first_name }}</td>
+        <td>{{ staffMember.last_name }}</td>
+        <td>{{ staffMember.role }}</td>
+        <td>{{ staffMember.phone_number }}</td>
+        <td>{{ staffMember.email }}</td>
+        <td>{{ staffMember.hire_date | date }}</td>
+        <td>{{ staffMember.salary }}</td>
+        <td>
+          <button (click)="startEdit(staffMember)">Edit</button>
+          <button (click)="deleteStaff(staffMember._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.first_name" name="edit_first_name" required /></td>
+        <td><input [(ngModel)]="editData.last_name" name="edit_last_name" required /></td>
+        <td><input [(ngModel)]="editData.role" name="edit_role" required /></td>
+        <td><input [(ngModel)]="editData.phone_number" name="edit_phone_number" required /></td>
+        <td><input [(ngModel)]="editData.email" name="edit_email" type="email" required /></td>
+        <td><input [(ngModel)]="editData.hire_date" name="edit_hire_date" type="date" required /></td>
+        <td><input [(ngModel)]="editData.salary" name="edit_salary" type="number" required /></td>
+        <td>
+          <button (click)="saveEdit(staffMember._id)">Save</button>
+          <button (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>
