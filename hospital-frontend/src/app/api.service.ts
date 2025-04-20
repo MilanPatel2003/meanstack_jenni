@@ -27,6 +27,40 @@ export class ApiService {
     return this.http.delete(`${this.baseUrl}/patients/${id}`);
   }
 
+  // Drugs CRUD
+  getDrugs(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/drugs`);
+  }
+  getDrug(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/drugs/${id}`);
+  }
+  addDrug(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/drugs`, data);
+  }
+  updateDrug(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/drugs/${id}`, data);
+  }
+  deleteDrug(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/drugs/${id}`);
+  }
+
+  // Prescriptions CRUD
+  getPrescriptions(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/prescriptions`);
+  }
+  getPrescription(id: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/prescriptions/${id}`);
+  }
+  addPrescription(data: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/prescriptions`, data);
+  }
+  updatePrescription(id: string, data: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/prescriptions/${id}`, data);
+  }
+  deletePrescription(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/prescriptions/${id}`);
+  }
+
   // Doctors CRUD
   getDoctors(): Observable<any> {
     return this.http.get(`${this.baseUrl}/doctors`);

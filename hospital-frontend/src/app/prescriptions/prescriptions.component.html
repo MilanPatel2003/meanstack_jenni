@@ -1,0 +1,156 @@
+<h2>Prescriptions</h2>
+
+<!-- Add Prescription Form -->
+<section class="form-section">
+  <h3>Add New Prescription</h3>
+  <form #form="ngForm" (ngSubmit)="addPrescription()" class="prescription-form">
+    <div class="form-group">
+      <label for="prescription_id">Prescription ID</label>
+      <input id="prescription_id" [(ngModel)]="newPrescription.prescription_id" name="prescription_id" required />
+    </div>
+    <div class="form-group">
+      <label for="patient_id">Patient</label>
+      <select id="patient_id" [(ngModel)]="newPrescription.patient_id" name="patient_id" required>
+        <option value="" disabled selected>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="doctor_id">Doctor</label>
+      <select id="doctor_id" [(ngModel)]="newPrescription.doctor_id" name="doctor_id" required>
+        <option value="" disabled selected>Select Doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor._id">
+          {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="drug_id">Drug</label>
+      <select id="drug_id" [(ngModel)]="newPrescription.drug_id" name="drug_id" required>
+        <option value="" disabled selected>Select Drug</option>
+        <option *ngFor="let drug of drugs" [value]="drug._id">
+          {{ drug.drug_name }} ({{ drug.brand }})
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="dosage">Dosage</label>
+      <input id="dosage" [(ngModel)]="newPrescription.dosage" name="dosage" required />
+    </div>
+    <div class="form-group">
+      <label for="duration">Duration</label>
+      <input id="duration" [(ngModel)]="newPrescription.duration" name="duration" required />
+    </div>
+    <div class="form-group">
+      <label for="prescription_date">Date</label>
+      <input id="prescription_date" [(ngModel)]="newPrescription.prescription_date" name="prescription_date" type="datetime-local" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Prescription</button>
+  </form>
+</section>
+
+<!-- Prescriptions List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Patient ID</th>
+      <th>Doctor ID</th>
+      <th>Drug ID</th>
+      <th>Dosage</th>
+      <th>Duration</th>
+      <th>Date</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let prescription of prescriptions">
+      <ng-container *ngIf="editPrescription !== prescription._id; else editRow">
+        <td>{{ prescription.prescription_id }}</td>
+        <td>{{ prescription.patient_id }}</td>
+        <td>{{ prescription.doctor_id }}</td>
+        <td>{{ prescription.drug_id }}</td>
+        <td>{{ prescription.dosage }}</td>
+        <td>{{ prescription.duration }}</td>
+        <td>{{ prescription.prescription_date | date:'yyyy-MM-dd HH:mm' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="startEdit(prescription)">Edit</button>
+          <button class="btn btn-danger btn-sm ml-2" (click)="deletePrescription(prescription._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.prescription_id" name="edit_prescription_id" required /></td>
+        <td>
+          <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+            <option value="" disabled>Select Patient</option>
+            <option *ngFor="let patient of patients" [value]="patient._id">
+              {{ patient.first_name }} {{ patient.last_name }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.doctor_id" name="edit_doctor_id" required>
+            <option value="" disabled>Select Doctor</option>
+            <option *ngFor="let doctor of doctors" [value]="doctor._id">
+              {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+            </option>
+          </select>
+        </td>
+        <td>
+          <select [(ngModel)]="editData.drug_id" name="edit_drug_id" required>
+            <option value="" disabled>Select Drug</option>
+            <option *ngFor="let drug of drugs" [value]="drug._id">
+              {{ drug.drug_name }} ({{ drug.brand }})
+            </option>
+          </select>
+        </td>
+        <td><input [(ngModel)]="editData.dosage" name="edit_dosage" required /></td>
+        <td><input [(ngModel)]="editData.duration" name="edit_duration" required /></td>
+        <td><input [(ngModel)]="editData.prescription_date" name="edit_prescription_date" type="datetime-local" required /></td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="saveEdit(editData._id)">Save</button>
+          <button class="btn btn-secondary btn-sm ml-2" (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #editRow>
+  <tr>
+    <td><input [(ngModel)]="editData.prescription_id" name="edit_prescription_id" required /></td>
+    <td>
+      <select [(ngModel)]="editData.patient_id" name="edit_patient_id" required>
+        <option value="" disabled>Select Patient</option>
+        <option *ngFor="let patient of patients" [value]="patient._id">
+          {{ patient.first_name }} {{ patient.last_name }}
+        </option>
+      </select>
+    </td>
+    <td>
+      <select [(ngModel)]="editData.doctor_id" name="edit_doctor_id" required>
+        <option value="" disabled>Select Doctor</option>
+        <option *ngFor="let doctor of doctors" [value]="doctor._id">
+          {{ doctor.first_name }} {{ doctor.last_name }} ({{ doctor.specialization }})
+        </option>
+      </select>
+    </td>
+    <td>
+      <select [(ngModel)]="editData.drug_id" name="edit_drug_id" required>
+        <option value="" disabled>Select Drug</option>
+        <option *ngFor="let drug of drugs" [value]="drug._id">
+          {{ drug.drug_name }} ({{ drug.brand }})
+        </option>
+      </select>
+    </td>
+    <td><input [(ngModel)]="editData.dosage" name="edit_dosage" required /></td>
+    <td><input [(ngModel)]="editData.duration" name="edit_duration" required /></td>
+    <td><input [(ngModel)]="editData.prescription_date" name="edit_prescription_date" type="datetime-local" required /></td>
+    <td>
+      <button class="btn btn-primary btn-sm" (click)="saveEdit(editData._id)">Save</button>
+      <button class="btn btn-secondary btn-sm ml-2" (click)="cancelEdit()">Cancel</button>
+    </td>
+  </tr>
+</ng-template>

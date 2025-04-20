@@ -36,6 +36,8 @@ app.use('/api/billing', require('./routes/billing'));
 app.use('/api/rooms', require('./routes/rooms'));
 app.use('/api/admissions', require('./routes/admissions'));
 app.use('/api/dashboard', require('./routes/dashboard'));
+app.use('/api/drugs', require('./routes/drugs'));
+app.use('/api/prescriptions', require('./routes/prescriptions'));
 
 const PORT = 3000;
 app.listen(PORT, () => {

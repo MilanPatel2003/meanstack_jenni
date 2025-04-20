@@ -1,0 +1,76 @@
+<h2>Drugs</h2>
+
+<!-- Add Drug Form -->
+<section class="form-section">
+  <h3>Add New Drug</h3>
+  <form #form="ngForm" (ngSubmit)="addDrug()" class="drug-form">
+    <div class="form-group">
+      <label for="drug_id">Drug ID</label>
+      <input id="drug_id" [(ngModel)]="newDrug.drug_id" name="drug_id" required />
+    </div>
+    <div class="form-group">
+      <label for="drug_name">Name</label>
+      <input id="drug_name" [(ngModel)]="newDrug.drug_name" name="drug_name" required />
+    </div>
+    <div class="form-group">
+      <label for="brand">Brand</label>
+      <input id="brand" [(ngModel)]="newDrug.brand" name="brand" required />
+    </div>
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input id="price" [(ngModel)]="newDrug.price" name="price" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="stock_quantity">Stock Quantity</label>
+      <input id="stock_quantity" [(ngModel)]="newDrug.stock_quantity" name="stock_quantity" type="number" required />
+    </div>
+    <div class="form-group">
+      <label for="expiry_date">Expiry Date</label>
+      <input id="expiry_date" [(ngModel)]="newDrug.expiry_date" name="expiry_date" type="date" required />
+    </div>
+    <button type="submit" class="btn-primary">Add Drug</button>
+  </form>
+</section>
+
+<!-- Drugs List -->
+<table border="1">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Brand</th>
+      <th>Price</th>
+      <th>Stock</th>
+      <th>Expiry</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let drug of drugs">
+      <ng-container *ngIf="editDrug !== drug._id; else editRow">
+        <td>{{ drug.drug_id }}</td>
+        <td>{{ drug.drug_name }}</td>
+        <td>{{ drug.brand }}</td>
+        <td>{{ drug.price }}</td>
+        <td>{{ drug.stock_quantity }}</td>
+        <td>{{ drug.expiry_date | date:'yyyy-MM-dd' }}</td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="startEdit(drug)">Edit</button>
+          <button class="btn btn-danger btn-sm ml-2" (click)="deleteDrug(drug._id)">Delete</button>
+        </td>
+      </ng-container>
+      <ng-template #editRow>
+        <td><input [(ngModel)]="editData.drug_id" name="edit_drug_id" required /></td>
+        <td><input [(ngModel)]="editData.drug_name" name="edit_drug_name" required /></td>
+        <td><input [(ngModel)]="editData.brand" name="edit_brand" required /></td>
+        <td><input [(ngModel)]="editData.price" name="edit_price" type="number" required /></td>
+        <td><input [(ngModel)]="editData.stock_quantity" name="edit_stock_quantity" type="number" required /></td>
+        <td><input [(ngModel)]="editData.expiry_date" name="edit_expiry_date" type="date" required /></td>
+        <td>
+          <button class="btn btn-primary btn-sm" (click)="saveEdit(editData._id)">Save</button>
+          <button class="btn btn-secondary btn-sm ml-2" (click)="cancelEdit()">Cancel</button>
+        </td>
+      </ng-template>
+    </tr>
+  </tbody>
+</table>

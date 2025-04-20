@@ -1,0 +1,232 @@
+.form-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  .form-section h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #25424b;
+    text-align: center;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  label {
+    font-weight: 500;
+    color: #3a6b7a;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  input {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid #bfcad6;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #f8fafb;
+    transition: border 0.2s;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  input:focus {
+    outline: none;
+    border: 1.5px solid #25424b;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  .btn-primary {
+    background: #25424b;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.3rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 0.8rem;
+    transition: background 0.2s;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  .btn-primary:hover {
+    background: #3a6b7a;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  
+  /* Table styling (complements global styles) */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    margin-bottom: 2rem;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  th, td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: left;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  th {
+    background: #f3f6f8;
+    font-weight: 600;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  button {
+    background: #25424b;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.9rem;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    transition: background 0.2s;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  button:hover {
+    background: #3a6b7a;
+  }
+
+td input,
+td select {
+  width: 100%;
+  max-width: 140px;
+  box-sizing: border-box;
+  font-size: 1rem;
+  padding: 0.3rem 0.5rem;
+}
+
+  

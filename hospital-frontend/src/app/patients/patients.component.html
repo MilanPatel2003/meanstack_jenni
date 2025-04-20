@@ -72,17 +72,23 @@
         </td>
       </ng-container>
       <ng-template #editRow>
-        <td><input [(ngModel)]="editData.first_name" name="edit_first_name{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.last_name" name="edit_last_name{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.date_of_birth" name="edit_dob{{patient._id}}" type="date" /></td>
-        <td><input [(ngModel)]="editData.gender" name="edit_gender{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.address" name="edit_address{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.phone_number" name="edit_phone{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.email" name="edit_email{{patient._id}}" /></td>
-        <td><input [(ngModel)]="editData.insurance_details" name="edit_insurance{{patient._id}}" /></td>
-        <td>
-          <button (click)="saveEdit(patient._id)">Save</button>
-          <button (click)="cancelEdit()">Cancel</button>
+        <td colspan="9">
+          <table>
+            <tr>
+              <td><input [(ngModel)]="editData.first_name" name="edit_first_name" required /></td>
+              <td><input [(ngModel)]="editData.last_name" name="edit_last_name" required /></td>
+              <td><input [(ngModel)]="editData.date_of_birth" name="edit_date_of_birth" type="date" required /></td>
+              <td><input [(ngModel)]="editData.gender" name="edit_gender" required /></td>
+              <td><input [(ngModel)]="editData.address" name="edit_address" required /></td>
+              <td><input [(ngModel)]="editData.phone_number" name="edit_phone_number" required /></td>
+              <td><input [(ngModel)]="editData.email" name="edit_email" required /></td>
+              <td><input [(ngModel)]="editData.insurance_details" name="edit_insurance_details" required /></td>
+              <td>
+                <button (click)="saveEdit(patient._id)">Save</button>
+                <button (click)="cancelEdit()">Cancel</button>
+              </td>
+            </tr>
+          </table>
         </td>
       </ng-template>
     </tr>

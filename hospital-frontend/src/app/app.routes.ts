@@ -11,4 +11,6 @@ export const routes: Routes = [
   { path: 'billing', loadComponent: () => import('./billing/billing.component').then(m => m.BillingComponent) },
   { path: 'rooms', loadComponent: () => import('./rooms/rooms.component').then(m => m.RoomsComponent) },
   { path: 'admissions', loadComponent: () => import('./admissions/admissions.component').then(m => m.AdmissionsComponent) },
+  { path: 'drugs', loadComponent: () => import('./drugs/drugs.component').then(m => m.DrugsComponent) },
+  { path: 'prescriptions', loadComponent: () => import('./prescriptions/prescriptions.component').then(m => m.PrescriptionsComponent) },
 ];

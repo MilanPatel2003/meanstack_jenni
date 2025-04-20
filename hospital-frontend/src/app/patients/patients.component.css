@@ -95,3 +95,38 @@ button {
 button:hover {
   background: #3a6b7a;
 }
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+  overflow-x: auto;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e0e0e0;
+  text-align: left;
+}
+th {
+  background: #f3f6f8;
+  font-weight: 600;
+}
+tr:last-child td {
+  border-bottom: none;
+}
+button {
+  background: #25424b;
+  color: #fff;
+  border: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: background 0.2s;
+}
+button:hover {
+  background: #3a6b7a;
+}
